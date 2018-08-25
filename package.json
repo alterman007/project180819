@@ -11,7 +11,7 @@
     "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
     "dev:server": "nodemon server/server.js",
     "pre-commit-msg": "echo '正在执行lint验证...' && exit 0",
-    "eslint": "eslint --ext .js --ext .jsx client",
+    "eslint": "eslint --ext .js --ext .jsx ./",
     "tslint": "tslint -c ./tslint.json './client/**/*.ts' './client/**/*.tsx'"
   },
   "pre-commit": [
