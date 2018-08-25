@@ -16,6 +16,7 @@
   },
   "pre-commit": [
     "pre-commit-msg",
+    "tslint",
     "eslint"
   ],
   "keywords": [],
