@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
+import Count from './Count';
 
 class App extends Component {
-  componentDidMount() {
+  public componentDidMount() {
     // todo
   }
 
-  render() {
-    return (
-      <div>hello world 1ffe2</div>
-    );
+  public render() {
+    return <Count maxCount={10} />;
   }
 }
 

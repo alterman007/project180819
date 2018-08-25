@@ -1,0 +1,11 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "ordered-imports": [false, {
+      "import-sources-order": "lowercase-last",
+      "named-imports-order": "lowercase-first"
+    }],
+    "semicolon": [true, "always"],
+    "quotemark": [false, "single", "jsx-double"]
+  }
+}

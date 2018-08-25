@@ -5,19 +5,14 @@ module.exports = {
     path: path.join(__dirname, '../dist'),
     publicPath: '/public/',
   },
+  devtool: 'inline-source-map',
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
   module: {
     rules: [
       {
-        enforce: 'pre',
-        test: /\.jsx?$/,
-        loader: 'eslint-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.jsx?$/,
+        test: /\.(j|t)sx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
       },

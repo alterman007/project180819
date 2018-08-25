@@ -1,18 +1,20 @@
 const path = require('path');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const webpackMerge = require('webpack-merge');
 const baseConfig = require('./webpack.config.base');
 
 const isDev = process.env.NODE_ENV === 'development';
 const config = webpackMerge(baseConfig, {
   entry: {
-    app: path.join(__dirname, '../client/index.js'),
+    app: path.join(__dirname, '../client/index.tsx'),
   },
   output: {
     filename: '[name].[hash:5].js',
   },
   plugins: [
+    new ForkTsCheckerWebpackPlugin(),
     new HTMLWebpackPlugin({
       template: path.join(__dirname, '../index.html'),
     }),

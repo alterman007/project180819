@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "lib": [
+      "es2015",
+      "dom",
+      "es2015.promise"
+    ],
+    "jsx": "react",
+    "allowJs": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
