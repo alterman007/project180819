@@ -25,7 +25,7 @@ const mapDispatchToProps: MapDispatchToProps<IActionProps, IOwnerProps> = (dispa
   actions: bindActionCreators({ decCount, incCount }, dispatch),
 });
 
-class Count extends Component<IStateProps & IActionProps & IOwnerProps, null> {
+class Count extends Component<IStateProps & IActionProps & IOwnerProps> {
   public componentDidMount() {
     // todo
   }
