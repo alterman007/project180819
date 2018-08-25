@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
+import React, { Component } from 'react';
+import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { IReduxState } from '../reducers';
 import {
@@ -25,7 +25,7 @@ const mapDispatchToProps: MapDispatchToProps<IActionProps, IOwnerProps> = (dispa
   actions: bindActionCreators({ decCount, incCount }, dispatch),
 });
 
-class Count extends React.Component<IStateProps & IActionProps & IOwnerProps> {
+class Count extends Component<IStateProps & IActionProps & IOwnerProps> {
   public componentDidMount() {
     // todo
   }
@@ -42,7 +42,7 @@ class Count extends React.Component<IStateProps & IActionProps & IOwnerProps> {
   }
   private onIncClick = () => {
     const { actions } = this.props;
-    actions.incCount(1);
+    actions.incCount(2);
   }
   private onDecClick = () => {
     const { actions } = this.props;

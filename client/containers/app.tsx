@@ -8,7 +8,7 @@ class App extends Component {
   }
 
   public render() {
-    return <Count maxCount={10} />;
+    return <Count maxCount={4} />;
   }
 }
 
