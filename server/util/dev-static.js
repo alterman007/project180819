@@ -39,15 +39,11 @@ serverCompiler.watch({}, (err, status) => {
 });
 
 module.exports = (app) => {
-  console.log('fffff0');
   app.use('/public', proxy({
     target: 'http://127.0.0.1:8888',
   }));
-  console.log('fffff1');
   app.get('*', (req, res) => {
-    console.log('fffff2');
     getTemplate().then((template) => {
-      console.log('fffff3');
       const appString = ReactDOMServer.renderToString(serverBundle);
       const htmlContent = template.replace('<!-- app-content -->', appString);
       res.send(htmlContent);
