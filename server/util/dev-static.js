@@ -24,6 +24,7 @@ let serverBundle;
 serverCompiler.outputFileSystem = mfs;
 serverCompiler.watch({}, (err, status) => {
   if (err) {
+    console.log('throw err');
     throw err;
   }
   const statusInfo = status.toJson();

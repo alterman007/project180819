@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import Count from './Count';
+import Hello from './Hello';
 
 class App extends Component {
   public componentDidMount() {
@@ -8,7 +9,12 @@ class App extends Component {
   }
 
   public render() {
-    return <Count maxCount={4} />;
+    return (
+      <div>
+        <Count maxCount={4} />
+        <Hello />
+      </div>
+    );
   }
 }
 
