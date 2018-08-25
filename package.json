@@ -15,7 +15,7 @@
   },
   "pre-commit": [
     "pre-commit-msg",
-    "tslint",
+    "tslint"
   ],
   "keywords": [],
   "author": "alterman",
