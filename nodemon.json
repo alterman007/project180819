@@ -4,8 +4,7 @@
     ".git",
     "node_modules",
     ".eslintrc",
-    "build",
-    "client"
+    "build"
   ],
   "env": {
     "NODE_ENV": "development"

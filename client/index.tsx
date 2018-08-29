@@ -2,6 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import App from './containers/app';
 import store from './configStore';
 
@@ -10,7 +11,9 @@ const $appContainer: HTMLElement = document.querySelector('#root') as HTMLElemen
 ReactDOM.hydrate(
   <AppContainer>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </AppContainer>,
   $appContainer,

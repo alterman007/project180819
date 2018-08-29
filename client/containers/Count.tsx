@@ -10,7 +10,7 @@ interface IStateProps {
   count: number;
 }
 interface IOwnerProps {
-  maxCount: number;
+  maxCount?: number;
 }
 interface IActionProps {
   actions: {
@@ -31,9 +31,9 @@ class Count extends Component<IStateProps & IActionProps & IOwnerProps> {
   }
 
   public render() {
-    const { count, maxCount } = this.props;
+    const { count, maxCount = 3 } = this.props;
     return (
-      <div>
+      <div className="count-container">
         <p style={{ background: count < maxCount ? 'blue' : 'red'}}>{count}</p>
         <button onClick={this.onDecClick}>-</button>
         <button onClick={this.onIncClick}>+</button>

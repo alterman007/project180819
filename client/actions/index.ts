@@ -16,3 +16,9 @@ export const decCount: ActionFunction1<number, IncCountAction> = createAction<nu
   actionTypes.decCount,
   (count: number): number => count,
 );
+
+export type UserLoginAction = Action<boolean>;
+export const userLogin: ActionFunction1<number, IncCountAction> = createAction<number, number>(
+  actionTypes.userLogin,
+  (count: number): number => count,
+);

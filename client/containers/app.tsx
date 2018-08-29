@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { hot } from 'react-hot-loader';
-import Count from './Count';
-import Hello from './Hello';
+import Routes from '../config/router';
+import Links from '../config/links';
 
 class App extends Component {
   public componentDidMount() {
@@ -10,10 +10,10 @@ class App extends Component {
 
   public render() {
     return (
-      <div>
-        <Count maxCount={4} />
-        <Hello />
-      </div>
+      <Fragment>
+        <Links />
+        <Routes />
+      </Fragment>
     );
   }
 }

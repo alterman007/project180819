@@ -20,7 +20,13 @@ if (isDev) {
   const serverEntry = require('../dist/server-entry').default;
   app.use('/public', express.static(path.join(__dirname, '../dist')));
   app.get('*', (req, res) => {
-    const appString = ReactSSR.renderToString(serverEntry);
+    const context = {};
+    const appString = ReactSSR.renderToString(serverEntry(req.url, context));
+    console.log(context);
+    if (context.url) {
+      res.redirect(301, context.url);
+      return;
+    }
     const htmlContent = template.replace('<!-- app-content -->', appString);
     res.send(htmlContent);
   });

@@ -6,6 +6,7 @@
       "named-imports-order": "lowercase-first"
     }],
     "semicolon": [true, "always"],
-    "quotemark": [false, "single", "jsx-double"]
+    "quotemark": [true, "single", "jsx-double"],
+    "object-literal-sort-keys": [false]
   }
 }

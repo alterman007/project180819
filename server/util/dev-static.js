@@ -6,7 +6,7 @@ const ReactDOMServer = require('react-dom/server');
 const proxy = require('http-proxy-middleware');
 const serverConfig = require('../../build/webpack.config.server');
 
-const getTemplate = () => {
+const getHTMLTemplate = () => {
   return new Promise((resolve, reject) => {
     axios.get('http://127.0.0.1:8888/public/index.html')
       .then((res) => {
@@ -21,10 +21,14 @@ const serverCompiler = webpack(serverConfig);
 const Module = module.constructor;
 
 let serverBundle;
+let initServerBundleResolve;
 serverCompiler.outputFileSystem = mfs;
+
+const initServerBundle = new Promise((resolve) => {
+  initServerBundleResolve = resolve;
+});
 serverCompiler.watch({}, (err, status) => {
   if (err) {
-    console.log('throw err');
     throw err;
   }
   const statusInfo = status.toJson();
@@ -36,7 +40,12 @@ serverCompiler.watch({}, (err, status) => {
   const bundle = mfs.readFileSync(bundlePath, 'utf-8');
   const m = new Module();
   m._compile(bundle, 'server-entry.js');
-  serverBundle = m.exports.default;
+  if (!serverBundle) {
+    serverBundle = m.exports.default;
+    initServerBundleResolve(true);
+  } else {
+    serverBundle = m.exports.default;
+  }
 });
 
 module.exports = (app) => {
@@ -44,8 +53,13 @@ module.exports = (app) => {
     target: 'http://127.0.0.1:8888',
   }));
   app.get('*', (req, res) => {
-    getTemplate().then((template) => {
-      const appString = ReactDOMServer.renderToString(serverBundle);
+    Promise.all([getHTMLTemplate(), initServerBundle]).then(([template]) => {
+      const context = {};
+      const appString = ReactDOMServer.renderToString(serverBundle(req.url, context));
+      if (context.url) {
+        res.redirect(301, context.url);
+        return;
+      }
       const htmlContent = template.replace('<!-- app-content -->', appString);
       res.send(htmlContent);
     });

@@ -39,5 +39,4 @@ if (isDev) {
     new webpack.HotModuleReplacementPlugin(),
   );
 }
-
 module.exports = config;
