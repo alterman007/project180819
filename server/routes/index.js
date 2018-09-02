@@ -6,7 +6,7 @@ const userRoute = require('./user');
 mongoose.connect(
   `mongodb://${mongoConf.username}:${mongoConf.password}@${mongoConf.host}:${mongoConf.port}/${mongoConf.database}`,
   { useNewUrlParser: true },
-  (err) => { console.log('err', err); }
+  (err) => { err && console.log('err', err); }
 );
 
 module.exports = function (app) {

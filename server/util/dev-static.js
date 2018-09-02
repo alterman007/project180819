@@ -29,7 +29,7 @@ const initServerBundle = new Promise((resolve) => {
 });
 serverCompiler.watch({}, (err, status) => {
   if (err) {
-    throw err;
+    console.log(err);
   }
   const statusInfo = status.toJson();
   statusInfo.errors.forEach(console.error);
