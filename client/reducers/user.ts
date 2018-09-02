@@ -1,4 +1,4 @@
-import { combineReducers, Reducer, ReducersMapObject } from 'redux';
+import { combineReducers, Reducer } from 'redux';
 import { handleAction } from 'redux-actions';
 import {
   setUserLogin, UserLoginAction,
