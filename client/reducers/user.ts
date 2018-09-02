@@ -1,4 +1,4 @@
-import { combineReducers, Reducer } from 'redux';
+import { combineReducers, Reducer, compose } from 'redux';
 import { handleAction } from 'redux-actions';
 import {
   setUserLogin, UserLoginAction,
