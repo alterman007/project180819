@@ -1,12 +1,10 @@
-import { combineReducers, createStore, Store } from 'redux';
+import { createStore, Store } from 'redux';
 
 import rootReducer, { IReduxState } from './reducers';
 
-const reducer = combineReducers({ ...rootReducer });
-
 const configureStore = (preloadState) => {
   const store: Store<IReduxState> = createStore(
-    reducer,
+    rootReducer,
     preloadState,
   );
   return store;

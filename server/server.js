@@ -1,13 +1,30 @@
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
-const ReactSSR = require('react-dom/server');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const expressSession = require('express-session');
+const MongoStore = require('connect-mongo')(expressSession);
 const serveFavicon = require('serve-favicon');
+const ReactSSR = require('react-dom/server');
+const routes = require('./routes');
 const app = express();
 
 const isDev = process.env.NODE_ENV === 'development';
 
 app.use(serveFavicon(path.join(__dirname, '../favicon.ico')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressSession({
+  secret: 'alterman',
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+  }),
+}));
+
+routes(app);
 
 if (isDev) {
   const devStatic = require('./util/dev-static');
@@ -33,5 +50,5 @@ if (isDev) {
 }
 
 app.listen(3333, () => {
-  console.log('server is listening on http://localhost:3333');
+  console.log('server is listening on http://127.0.0.1:3333');
 });
