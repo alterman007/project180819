@@ -1,15 +1,15 @@
 import { combineReducers, Reducer } from 'redux';
 import { handleAction } from 'redux-actions';
 import {
-  setUserLogin, UserLoginAction,
+  setUserLoginState, UserLoginStateAction,
   setUserInfo, UserInfoAction,
   IUserInfo,
 } from '../actions/user';
 
 const initUserLogin: boolean = false;
-const logged: Reducer<boolean, UserLoginAction> = handleAction<boolean, boolean>(
-  setUserLogin,
-  (state: boolean, action: UserLoginAction): boolean => action.payload,
+const logged: Reducer<boolean, UserLoginStateAction> = handleAction<boolean, boolean>(
+  setUserLoginState,
+  (state: boolean, action: UserLoginStateAction): boolean => action.payload,
   initUserLogin,
 );
 

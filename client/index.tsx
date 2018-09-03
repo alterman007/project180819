@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './containers/app';
 import store from './configStore';
-
+// window.store = store;
 const $appContainer: HTMLElement = document.querySelector('#root') as HTMLElement;
 
 ReactDOM.hydrate(

@@ -10,7 +10,6 @@ const config = {
     path: path.join(__dirname, '../dist'),
     publicPath: '/public/',
   },
-  devtool: 'inline-source-map',
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },

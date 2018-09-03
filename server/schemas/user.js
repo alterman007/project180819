@@ -3,11 +3,12 @@ const bcrypt = require('bcrypt');
 const { USER_PASSWORD_SALT_ROUNDS } = require('../constants');
 
 const userSchema = new Schema({
-  name: {
+  username: {
     type: String,
     unique: true,
   },
   password: String,
+  role: Number,
   meta: {
     createAt: {
       type: Date,

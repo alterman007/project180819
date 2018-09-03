@@ -1,25 +1,29 @@
 import React from 'react';
-import { Route, Redirect, RouteProps } from 'react-router-dom';
-import { History } from 'history';
-import authAPI from '../utils/auth';
+import { compose } from 'redux';
+import { connect, MapStateToProps } from 'react-redux';
+import { Route, Redirect, RouteProps, withRouter } from 'react-router-dom';
+import { LocationDescriptor } from 'history';
+import { IReduxState } from '../reducers';
 
-type LocationDescriptor<S> = History.LocationDescriptor<S>;
+interface IStateProps {
+  logged: boolean;
+}
 interface IAuthRouteProps extends RouteProps {
   component: React.ComponentType<any>;
 }
+
 export interface IAuthRedirectState {
   from: LocationDescriptor<any>;
 }
 
-function AuthRoute(props: IAuthRouteProps) {
-  const { component: Component, ...rest } = props;
-  const render = (renderProps: RouteProps) => {
-    // tslint:disable-next-line:no-console
-    console.warn({ renderProps });
-    // tslint:disable-next-line:no-console
-    console.log(authAPI.isAuthenticated);
+const mapStateToProps: MapStateToProps<IStateProps, {}, IReduxState> = (state: IReduxState) => ({
+  logged: state.user.logged,
+});
 
-    if (authAPI.isAuthenticated) {
+function AuthRoute(props: IAuthRouteProps & IStateProps) {
+  const { component: Component, logged, ...rest } = props;
+  const render = (renderProps: RouteProps) => {
+    if (logged) {
       return <Component {...renderProps} />;
     }
     const redirectToProps: LocationDescriptor<IAuthRedirectState> = {
@@ -36,4 +40,4 @@ function AuthRoute(props: IAuthRouteProps) {
   );
 }
 
-export default AuthRoute;
+export default compose(withRouter, connect(mapStateToProps))(AuthRoute);

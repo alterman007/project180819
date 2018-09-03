@@ -1,8 +1,8 @@
 const User = require('../models/user');
 
 exports.signin = (req, res) => {
-  const { name, password } = req.body;
-  User.findOne({ name: name }, (err, user) => {
+  const { username, password } = req.body;
+  User.findOne({ username: username }, (err, user) => {
     if (err) {
       res.json({ success: false, message: err });
       return;
@@ -24,7 +24,7 @@ exports.signin = (req, res) => {
       res.json({
         success: true,
         message: {
-          user: user.name,
+          user: user.username,
         },
       });
     });

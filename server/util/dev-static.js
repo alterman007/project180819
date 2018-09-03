@@ -39,7 +39,12 @@ serverCompiler.watch({}, (err, status) => {
   const bundlePath = path.join(outputPath, outputFilename);
   const bundle = mfs.readFileSync(bundlePath, 'utf-8');
   const m = new Module();
-  m._compile(bundle, 'server-entry.js');
+  try {
+    m._compile(bundle, 'server-entry.js');
+  } catch (err) {
+    // TODO
+    console.log(err);
+  }
   if (!serverBundle) {
     serverBundle = m.exports.default;
     initServerBundleResolve(true);

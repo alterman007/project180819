@@ -1,95 +1,43 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
-import { Icon, Input, Button, Checkbox } from 'antd';
-import Form, { FormComponentProps } from 'antd/lib/form';
-import { GetFieldDecoratorOptions } from 'antd/lib/form/Form';
+import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
+import LoginForm from '../components/LoginForm';
 import { IAuthRedirectState } from './AuthRoute';
-import authAPI from '../utils/auth';
-import 'antd/lib/form/style/';
-import 'antd/lib/input/style/';
-import 'antd/lib/button/style/';
-import 'antd/lib/checkbox/style';
-import './Login.less';
-// import 'antd/lib/form/style/css';
+import { userLogin, IUserLoginArgs, UserLoginAction } from '../actions/user';
+import { IReduxState } from '../reducers';
 
-interface IFieldConfig {
-  option: GetFieldDecoratorOptions;
-  node: React.ReactNode;
+interface IStateProps {
+  logged: boolean;
 }
-interface IFieldsConfig {
-  [index: string]: IFieldConfig;
+interface IActionProps {
+  actions: {
+    userLogin(payload: IUserLoginArgs): UserLoginAction;
+  };
 }
+type LoginRouteProps = RouteComponentProps<any, {}, IAuthRedirectState>;
 
-const FormItem = Form.Item;
+const mapStateToProps: MapStateToProps<IStateProps, {}, IReduxState> = (state: IReduxState) => ({
+  logged: state.user.logged,
+});
+const mapDispatchToProps: MapDispatchToProps<IActionProps, {}> = (dispatch) => ({
+  actions: bindActionCreators({ userLogin }, dispatch),
+});
 
-class Login extends React.Component<FormComponentProps & RouteComponentProps<any, {}, IAuthRedirectState>, any> {
-  public state = {
-    name: 'alterman',
-  };
-  private loginFieldsOption: IFieldsConfig = {
-    userName: {
-      option: { rules: [{ required: true, message: 'Please input your username!' }] },
-      node: (
-        <Input
-          prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          placeholder="Username"
-        />
-      ),
-    },
-    password: {
-      option: { rules: [{ required: true, message: 'Please input your Password!' }] },
-      node: (
-        <Input
-          prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          type="password"
-          placeholder="Password"
-        />
-      ),
-    },
-    remember: {
-      option: { valuePropName: 'checked', initialValue: true },
-      node: <Checkbox>记住我</Checkbox>,
-    },
-  };
+class Login extends React.Component<LoginRouteProps & IStateProps & IActionProps> {
   public render() {
-    const locationState: IAuthRedirectState = this.props.location.state || { from: '/' };
-    // console.warn(this.props.location);
-    if (authAPI.isAuthenticated) {
+    const { logged, location } = this.props;
+    const locationState: IAuthRedirectState = location.state || { from: '/' };
+    if (logged) {
       return <Redirect to={locationState.from} />;
     }
-    return (
-      <Form onSubmit={this.handleSubmit} className="login-form-container">
-        <FormItem>
-          {this.getFormFieldWrapper('userName')}
-        </FormItem>
-        <FormItem>
-          {this.getFormFieldWrapper('password')}
-        </FormItem>
-        <FormItem>
-          {this.getFormFieldWrapper('remember')}
-          <a className="login-form-forgot" href="">忘记密码</a>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            登录
-          </Button>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            注册
-          </Button>
-        </FormItem>
-      </Form>
-    );
+    return <LoginForm onFormSubmit={this.handleSubmit} />;
   }
-  private handleSubmit = (ev: React.SyntheticEvent) => {
-    ev.preventDefault();
-    authAPI.authenticate(() => {
-      this.setState({
-        name: Math.random().toString(),
-      });
-    });
-  }
-  private getFormFieldWrapper = (key: string) => {
-    const { getFieldDecorator } = this.props.form;
-    return getFieldDecorator(key, this.loginFieldsOption[key].option)(this.loginFieldsOption[key].node);
+  private handleSubmit = (value: IUserLoginArgs): void => {
+    const { actions } = this.props;
+    // console.log(form.getFieldsValue());
+    actions.userLogin(value);
   }
 }
 
-export default Form.create()(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
