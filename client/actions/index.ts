@@ -1,5 +1,7 @@
 import {
   Action,
+  BaseAction,
+  ActionFunction0,
   ActionFunction1,
   createAction,
 } from 'redux-actions';
@@ -16,3 +18,6 @@ export const decCount: ActionFunction1<number, IncCountAction> = createAction<nu
   actionTypes.decCount,
   (count: number): number => count,
 );
+
+export type IAppStart = BaseAction;
+export const appStart: ActionFunction0<IAppStart> = createAction(actionTypes.appStart);

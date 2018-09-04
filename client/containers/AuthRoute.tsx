@@ -1,16 +1,18 @@
 import React from 'react';
-import { compose } from 'redux';
+// import { compose } from 'redux';
 import { connect, MapStateToProps } from 'react-redux';
-import { Route, Redirect, RouteProps, withRouter } from 'react-router-dom';
+import { Route, Redirect, RouteProps, withRouter, RouteComponentProps } from 'react-router-dom';
 import { LocationDescriptor } from 'history';
 import { IReduxState } from '../reducers';
 
 interface IStateProps {
   logged: boolean;
 }
-interface IAuthRouteProps extends RouteProps {
-  component: React.ComponentType<any>;
-}
+
+type IOwnerProps = RouteProps;
+// interface IAuthRouteProps extends RouteProps {
+//   component: React.ComponentType<any>;
+// }
 
 export interface IAuthRedirectState {
   from: LocationDescriptor<any>;
@@ -20,9 +22,9 @@ const mapStateToProps: MapStateToProps<IStateProps, {}, IReduxState> = (state: I
   logged: state.user.logged,
 });
 
-function AuthRoute(props: IAuthRouteProps & IStateProps) {
+function AuthRoute(props: IOwnerProps & IStateProps) {
   const { component: Component, logged, ...rest } = props;
-  const render = (renderProps: RouteProps) => {
+  const render = (renderProps: RouteComponentProps<{}>) => {
     if (logged) {
       return <Component {...renderProps} />;
     }
@@ -32,6 +34,7 @@ function AuthRoute(props: IAuthRouteProps & IStateProps) {
     };
     return <Redirect to={redirectToProps} />;
   };
+  // console.log({ rest, props });
   return (
     <Route
       {...rest}
@@ -40,4 +43,8 @@ function AuthRoute(props: IAuthRouteProps & IStateProps) {
   );
 }
 
-export default compose(withRouter, connect(mapStateToProps))(AuthRoute);
+export default withRouter<any>(
+  connect<IStateProps, {}, IOwnerProps, IReduxState>(mapStateToProps)(AuthRoute),
+);
+
+// export default compose(withRouter, connect(mapStateToProps))(AuthRoute);

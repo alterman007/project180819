@@ -48,6 +48,7 @@ serverCompiler.watch({}, (err, status) => {
   if (!serverBundle) {
     serverBundle = m.exports.default;
     initServerBundleResolve(true);
+    console.log('server bundle done');
   } else {
     serverBundle = m.exports.default;
   }

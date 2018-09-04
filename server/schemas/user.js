@@ -26,6 +26,7 @@ userSchema.pre('save', function (next) {
     this.meta.createAt = Date.now();
   }
   this.meta.updateAt = Date.now();
+  this.role = this.role || 10;
   bcrypt.hash(this.password, USER_PASSWORD_SALT_ROUNDS, (err, hash) => {
     if (err) {
       next(err);

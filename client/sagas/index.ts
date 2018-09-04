@@ -1,9 +1,11 @@
 import { Effect } from 'redux-saga';
 import { all } from 'redux-saga/effects';
+import appStart from './appStart';
 import login from './login';
 import logger from './logger';
 
 const AllForks: Effect[] = [
+  appStart,
   login,
 ];
 // console.log('process.env', process.env);

@@ -7,7 +7,7 @@ import 'antd/lib/form/style/';
 import 'antd/lib/input/style/';
 import 'antd/lib/button/style/';
 import 'antd/lib/checkbox/style';
-import './LoginForm.less';
+import './SignForm.less';
 
 interface IOwnerProps {
   onFormSubmit(props: IUserLoginArgs): void;
@@ -21,7 +21,7 @@ interface IFieldsConfig {
 }
 
 const FormItem = Form.Item;
-class LoginForm extends React.Component<IOwnerProps & FormComponentProps> {
+class SignForm extends React.Component<IOwnerProps & FormComponentProps> {
   private loginFieldsOption: IFieldsConfig = {
     username: {
       option: { rules: [{ required: true, message: 'Please input your username!' }] },
@@ -62,9 +62,6 @@ class LoginForm extends React.Component<IOwnerProps & FormComponentProps> {
           <Button type="primary" htmlType="submit" className="login-form-button">
             登录
           </Button>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            注册
-          </Button>
         </FormItem>
       </Form>
     );
@@ -83,4 +80,4 @@ class LoginForm extends React.Component<IOwnerProps & FormComponentProps> {
   }
 }
 
-export default Form.create()(LoginForm);
+export default Form.create()(SignForm);
